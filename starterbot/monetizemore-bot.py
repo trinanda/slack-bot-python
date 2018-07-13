@@ -1,9 +1,11 @@
 import os
+
 import time
 import re
 from slackclient import SlackClient
 
 # instantiate Slack client
+# export SLACK_BOT_TOKEN='xoxb-16617767734-391214498594-yv9cvfIcIpXci0xbrZL6vsdj'
 slack_client = SlackClient(os.environ.get('SLACK_BOT_TOKEN'))
 # starterbot's user ID in Slack: value is assigned after the bot starts up
 starterbot_id = None
@@ -13,6 +15,23 @@ RTM_READ_DELAY = 1 # 1 seconds delay between reading from RTM
 help = 'help'
 EXAMPLE_COMMAND = help
 MENTION_REGEX = "^<@(|[WU].+?)>(.*)"
+
+filename = '/home/eko/monetizemore/web_app/adscrape/apps/ans/fetchers/'
+
+list_of_fetcher = []
+
+def readFile(filename):
+    with open(filename) as f:
+        for line in f:
+            for part in line.split():
+                if "http=" in part:
+                    # print(part)
+                    list_of_fetcher.append(part)
+            # print(line)
+            # break
+
+for filename in os.listdir(os.getcwd()):
+    readFile(filename)
 
 
 def parse_bot_commands(slack_events):
@@ -54,23 +73,15 @@ def handle_command(command, channel):
    # This is where you start to implement more commands!
    if command.startswith(EXAMPLE_COMMAND):
        # response = "Sure.. write some more code then I can do that!"
-       response2 = 'available command: , 1. one, 2. two , 3. three , ' \
-                   '4. I need more job , 5. ls fetcher , ' \
-                   '6. EFS , ' \
-                   '7. Kanban Board , ' \
-                   '8. Assigned to Me '
+       response2 = 'available command: , ''1. I need more job , 2. ls fetcher , ' \
+                   '3. EFS , ' \
+                   '4. Kanban Board , ' \
+                   '5. Assigned to Me '
 
-
-   elif command.startswith('one'):
-       response2 = 'satu'
-   elif command.startswith('two'):
-       response2 = 'dua'
-   elif command.startswith('three'):
-       response2 = 'tiga'
    elif command.startswith('I need more job'):
        response2 = 'this feature still on development'
    elif command.startswith('ls fetcher'):
-       response2 = 'this feature still on development'
+       response2 =  list_of_fetcher
    elif command.startswith('EFS'):
        response2 = 'Untuk sementara masih menggunakan url: https://monetizemore.atlassian.net/secure/RapidBoard.jspa?rapidView=6&projectKey=EFS&view=planning.nodetail'
    elif command.startswith('Kanban Board'):
