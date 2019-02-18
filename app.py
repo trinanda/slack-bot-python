@@ -24,7 +24,7 @@ def readFile(filename):
     with open(filename) as f:
         for line in f:
             for part in line.split():
-                if "TITLE=" in part:
+                if "http=" in part:
                     # print(part)
                     list_of_fetcher.append(part)
             # print(line)
