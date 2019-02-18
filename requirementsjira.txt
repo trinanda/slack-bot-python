@@ -1,0 +1,4 @@
+mechanize
+bs4
+urllib2
+cookielib
